@@ -1,0 +1,85 @@
+# Multi-Platform Snake Game .gitignore
+
+# Build outputs
+build/
+*.gba
+*.nds
+*.dol
+*.elf
+*.map
+
+# Object files
+*.o
+*.obj
+
+# Libraries
+*.a
+*.lib
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Compiler generated files
+*.d
+*.dep
+
+# Platform specific
+# GBA specific
+*.sav
+*.sgm
+
+# NDS specific
+*.sav
+*.nds.sav
+
+# GameCube specific
+*.gci
+*.raw
+
+# Asset build files (if using grit)
+*.c
+*.h
+!core/*.c
+!core/*.h
+!platform/*.c
+!platform/*.h
+!main.c
+
+# Documentation build
+docs/_build/
+*.pdf
+
+# Test files
+test/
+tests/
+*_test.c
+*_test.o
