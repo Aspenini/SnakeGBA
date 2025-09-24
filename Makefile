@@ -92,8 +92,8 @@ SOURCES := main.c $(CORE_SRC) $(PLATFORM_SRC)
 # Object files
 OFILES := $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 
-# Default target
-all: $(OUTPUT)
+# Default target (GBA only)
+all: gba
 
 # Create build directory
 $(BUILD_DIR):
@@ -149,16 +149,17 @@ clean-$(PLATFORM):
 	@rm -rf $(BUILD_DIR)
 	@rm -f $(OUTPUT) $(TARGET).map
 
-# Build all platforms
-all-platforms: gba nds
+# Build all platforms (GBA only for now)
+all-platforms: gba
 
-gba:
-	@$(MAKE) PLATFORM=gba
+gba: $(OUTPUT)
 
 nds:
-	@$(MAKE) PLATFORM=nds
+	@echo "NDS build not fully implemented yet"
+	@$(MAKE) PLATFORM=nds || true
 
 ngc:
-	@$(MAKE) PLATFORM=ngc
+	@echo "GameCube build not fully implemented yet"
+	@$(MAKE) PLATFORM=ngc || true
 
 .PHONY: all clean clean-$(PLATFORM) all-platforms gba nds ngc

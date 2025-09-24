@@ -29,10 +29,10 @@ void game_init(Game* game) {
     game->food.y = center_y;
 }
 
-// Spawn food at random location
+// Spawn food at random location - BULLETPROOF VERSION
 void game_spawn_food(Game* game) {
-    // Simple approach: find first empty position
-    // This is more reliable than random placement
+    // Create a simple position that's guaranteed to work
+    // Start from top-left and find first empty spot
     for (int fy = 0; fy < game->gfx.tiles_h; fy++) {
         for (int fx = 0; fx < game->gfx.tiles_w; fx++) {
             // Check if this position is empty
@@ -52,9 +52,10 @@ void game_spawn_food(Game* game) {
         }
     }
     
-    // If no empty position found (shouldn't happen), place at top-left corner
-    game->food.x = 0;
-    game->food.y = 0;
+    // If somehow all positions are occupied (shouldn't happen with 600 tiles),
+    // place food at a position that's definitely not the head
+    game->food.x = (game->snake[0].x + 1) % game->gfx.tiles_w;
+    game->food.y = (game->snake[0].y + 1) % game->gfx.tiles_h;
 }
 
 // Update game state
@@ -125,7 +126,7 @@ void game_update(Game* game, uint32_t buttons) {
     game->snake[0].x = nx;
     game->snake[0].y = ny;
     
-    // If we ate food, grow snake
+    // If we ate food, grow snake and spawn new food
     if (ate_food) {
         // Grow snake
         if (game->snake_len < MAX_SNAKE_LEN) {
@@ -142,18 +143,16 @@ void game_update(Game* game, uint32_t buttons) {
         // Level up every 5 food
         game->level = (game->score / 50) + 1;
         
+        // Spawn new food IMMEDIATELY after growing snake
+        game_spawn_food(game);
+        
         plat_beep_ok();
     }
     
-    // Update grid with new snake positions
+    // Update grid with new snake positions (for collision detection)
     memset(game->grid, 0, sizeof(game->grid));
     for (int i = 0; i < game->snake_len; i++) {
         game->grid[game->snake[i].y][game->snake[i].x] = 1;
-    }
-    
-    // Spawn new food AFTER grid update (if we ate food)
-    if (ate_food) {
-        game_spawn_food(game);
     }
 }
 

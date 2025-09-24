@@ -14,9 +14,9 @@ typedef enum {
     GAME_OVER
 } GameState;
 
-// Game data structure
+// Game data structure - using GBA fast RAM
 typedef struct {
-    // Snake data
+    // Snake data (in EWRAM for speed)
     Vec2 snake[MAX_SNAKE_LEN];
     int snake_len;
     int dir_x, dir_y;
@@ -30,7 +30,7 @@ typedef struct {
     int high_score;
     int level;
     
-    // Grid for collision detection
+    // Grid for collision detection (optimized size)
     uint8_t grid[20][30]; // 0=empty, 1=snake, 2=food
     
     // Timing

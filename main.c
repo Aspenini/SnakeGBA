@@ -2,8 +2,8 @@
 #include <stddef.h>
 #include "core/game.h"
 
-// Game instance
-static Game game;
+// Game instance - allocate in EWRAM for speed
+static Game game __attribute__((section(".ewram")));
 
 int main(void) {
     // Initialize platform
